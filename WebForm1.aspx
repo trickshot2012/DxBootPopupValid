@@ -1,6 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="DXWebApplication20.WebForm1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Content" runat="server">
+    <script >
+        function conClick(s, e) {
+    var isValid = ASPxClientEdit.ValidateGroup('Validation');
+    if (isValid) 
+        popUpClient.Show();  
+    e.processOnServer = isValid;  
+}
+    </script>
     <h1>How to show popup only when Validation is ok</h1>
     <dx:BootstrapFormLayout runat="server" ID="FormLayoutDataBinding">
         <Items>
@@ -26,21 +34,22 @@
                 <ContentCollection>
                     <dx:ContentControl>
                         <div id="default-popup-control-51" class="popup-target popup-target-sm">
-                            <dx:BootstrapButton class="popup-target popup-target-sm" runat="server" Text="ok" SettingsBootstrap-RenderOption="Primary" AutoPostBack="true" ID="btnSubmit" OnClick="BtnSubmit_Click">
+                            <dx:BootstrapButton class="popup-target popup-target-sm" runat="server" Text="Submit" SettingsBootstrap-RenderOption="Primary" AutoPostBack="true" ID="btnSubmit"  OnClick="BtnSubmit_Click">
                                 <SettingsBootstrap RenderOption="Primary"></SettingsBootstrap>
-                                <ClientSideEvents Click="function(s, e) { e.processOnServer = ASPxClientEdit.ValidateGroup('Validation'); }" />
+                                <ClientSideEvents Click="conClick" />
                             </dx:BootstrapButton>
-                        </div>
+                   
                         <dx:BootstrapButton runat="server" Text="Cancel" ID="btnCancel" SettingsBootstrap-RenderOption="Link" AutoPostBack="true" OnClick="btnCancel_Click">
                             <SettingsBootstrap RenderOption="Link"></SettingsBootstrap>
                         </dx:BootstrapButton>
+                                 </div>
                     </dx:ContentControl>
                 </ContentCollection>
             </dx:BootstrapLayoutItem>
         </Items>
     </dx:BootstrapFormLayout>
 
-    <dx:BootstrapPopupControl runat="server" PopupElementCssSelector="#default-popup-control-51" HeaderText="Message"
+    <dx:BootstrapPopupControl runat="server" HeaderText="Message"
         PopupHorizontalAlign="WindowCenter" ClientInstanceName="popUpClient" PopupVerticalAlign="WindowCenter" Width="500px" CloseAction="CloseButton"
         Modal="true">
         <ContentCollection>
